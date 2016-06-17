@@ -41,13 +41,13 @@ public class Game extends AppCompatActivity {
             R.drawable.image_06,
             R.drawable.image_07,
             R.drawable.image_08,
-            R.drawable.image_09,
-            R.drawable.image_10,
-            R.drawable.image_11,
-            R.drawable.image_12,
-            R.drawable.image_13,
-            R.drawable.image_14,
-            R.drawable.image_15,
+            R.drawable.image_00,
+            R.drawable.image_00,
+            R.drawable.image_00,
+            R.drawable.image_00,
+            R.drawable.image_00,
+            R.drawable.image_00,
+            R.drawable.image_00,
     };
 
 
