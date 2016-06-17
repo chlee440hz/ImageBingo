@@ -67,6 +67,7 @@ public class Game extends AppCompatActivity {
         }
         TextView state = (TextView) findViewById(R.id.state);
         final ImageView selectedImage = (ImageView) findViewById(R.id.selectedImage);
+        final TextView stateDetailed = (TextView) findViewById(R.id.stateDetailed);
         final Button check = (Button) findViewById(R.id.check);
         final ArrayList<ImageButton> bingo = new ArrayList<ImageButton>();
 
@@ -89,6 +90,7 @@ public class Game extends AppCompatActivity {
         check.setEnabled(false);
         check.setBackgroundColor(Color.parseColor("#c4c4cf"));
         selectedImage.setImageResource(R.drawable.logo);
+        stateDetailed.setText("그림을 선택하세요");
 
         bingo.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +99,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[0]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(1).setOnClickListener(new View.OnClickListener() {
@@ -106,6 +109,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[1]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(2).setOnClickListener(new View.OnClickListener() {
@@ -115,6 +119,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[2]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(3).setOnClickListener(new View.OnClickListener() {
@@ -124,6 +129,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[3]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(4).setOnClickListener(new View.OnClickListener() {
@@ -133,6 +139,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[4]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(5).setOnClickListener(new View.OnClickListener() {
@@ -142,6 +149,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[5]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(6).setOnClickListener(new View.OnClickListener() {
@@ -151,6 +159,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[6]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(7).setOnClickListener(new View.OnClickListener() {
@@ -160,6 +169,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[7]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(8).setOnClickListener(new View.OnClickListener() {
@@ -169,6 +179,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[8]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(9).setOnClickListener(new View.OnClickListener() {
@@ -178,6 +189,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[9]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(10).setOnClickListener(new View.OnClickListener() {
@@ -187,6 +199,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[10]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(11).setOnClickListener(new View.OnClickListener() {
@@ -196,6 +209,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[11]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(12).setOnClickListener(new View.OnClickListener() {
@@ -205,6 +219,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[12]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(13).setOnClickListener(new View.OnClickListener() {
@@ -214,6 +229,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[13]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(14).setOnClickListener(new View.OnClickListener() {
@@ -223,6 +239,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[14]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
         bingo.get(15).setOnClickListener(new View.OnClickListener() {
@@ -232,6 +249,7 @@ public class Game extends AppCompatActivity {
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[15]);
                 selectedImage.setImageResource(imageID);
+                stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
             }
         });
 
@@ -241,6 +259,7 @@ public class Game extends AppCompatActivity {
                 check.setEnabled(false);
                 check.setBackgroundColor(Color.parseColor("#c4c4cf"));
                 selectedImage.setImageResource(R.drawable.logo);
+                stateDetailed.setText("그림을 선택하세요");
             }
         });
     }
