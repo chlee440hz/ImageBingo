@@ -60,7 +60,7 @@ public class Game extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.game);
+        setContentView(R.layout.game_relative);
         ArrayList<Integer> ran = new ArrayList<Integer>();
         for(int i = 0; i < 16; i++) {
             ran.add(i);
