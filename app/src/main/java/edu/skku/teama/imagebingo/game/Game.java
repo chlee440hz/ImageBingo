@@ -14,40 +14,40 @@ import edu.skku.teama.imagebingo.R;
 
 public class Game extends AppCompatActivity {
     private static final int[] BINGO_IDS = {
-            R.id.bingo1,
-            R.id.bingo2,
-            R.id.bingo3,
-            R.id.bingo4,
-            R.id.bingo5,
-            R.id.bingo6,
-            R.id.bingo7,
-            R.id.bingo8,
-            R.id.bingo9,
+            R.id.bingo00,
+            R.id.bingo01,
+            R.id.bingo02,
+            R.id.bingo03,
+            R.id.bingo04,
+            R.id.bingo05,
+            R.id.bingo06,
+            R.id.bingo07,
+            R.id.bingo08,
+            R.id.bingo09,
             R.id.bingo10,
             R.id.bingo11,
             R.id.bingo12,
             R.id.bingo13,
             R.id.bingo14,
             R.id.bingo15,
-            R.id.bingo16,
     };
     private static final int[] IMAGE_IDS = {
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
-            R.drawable.logo,
+            R.drawable.image_00,
+            R.drawable.image_01,
+            R.drawable.image_02,
+            R.drawable.image_03,
+            R.drawable.image_04,
+            R.drawable.image_05,
+            R.drawable.image_06,
+            R.drawable.image_07,
+            R.drawable.image_08,
+            R.drawable.image_09,
+            R.drawable.image_10,
+            R.drawable.image_11,
+            R.drawable.image_12,
+            R.drawable.image_13,
+            R.drawable.image_14,
+            R.drawable.image_15,
     };
 
 
@@ -55,14 +55,14 @@ public class Game extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
-        TextView state = (TextView) findViewById(R.id.state);
-        ImageView selectedImage = (ImageView) findViewById(R.id.selectedImage);
-        Button check = (Button) findViewById(R.id.check);
-        ArrayList<ImageButton> bingo = new ArrayList<ImageButton>();
         ArrayList<Integer> ran = new ArrayList<Integer>();
         for(int i = 0; i < 16; i++) {
             ran.add(i);
         }
+        TextView state = (TextView) findViewById(R.id.state);
+        ImageView selectedImage = (ImageView) findViewById(R.id.selectedImage);
+        Button check = (Button) findViewById(R.id.check);
+        ArrayList<ImageButton> bingo = new ArrayList<ImageButton>();
 
         Random bimag = new Random();
         Integer b[] = new Integer[16];
