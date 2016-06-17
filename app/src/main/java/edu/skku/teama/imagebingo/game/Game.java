@@ -59,20 +59,19 @@ public class Game extends AppCompatActivity {
         ImageView selectedImage = (ImageView) findViewById(R.id.selectedImage);
         Button check = (Button) findViewById(R.id.check);
         ArrayList<ImageButton> bingo = new ArrayList<ImageButton>();
+        ArrayList<Integer> ran = new ArrayList<Integer>();
+        for(int i = 0; i < 16; i++) {
+            ran.add(i);
+        }
 
         Random bimag = new Random();
         Integer b[] = new Integer[16];
         int img[] = new int[16];
-        /*for(int i = 0; i < 16; i++) {
-            b[i] = bimag.nextInt(15);
-            for(int j = 0; j < i; j++) {
-                //if(b[i] == b[j]) {
-                //    i--;
-                //    break;
-                //}
-                img[i] = IMAGE_IDS[i];
-            }
-        }*/
+        for(int i = 0; i < 16; i++) {
+            int j = bimag.nextInt(ran.size());
+            b[i] = ran.get(j);
+            ran.remove(j);
+        }
 
         for(int i = 0; i < 16; i++) {
             ImageButton button = (ImageButton)findViewById(BINGO_IDS[i]);
