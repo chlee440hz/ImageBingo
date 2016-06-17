@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.skku.teama.imagebingo.R;
+import edu.skku.teama.imagebingo.game.Game;
 import edu.skku.teama.imagebingo.help.Help;
 import edu.skku.teama.imagebingo.info.Info;
 import edu.skku.teama.imagebingo.rules.Rules;
@@ -23,8 +24,13 @@ public class Main extends AppCompatActivity {
         setTitle("메인 화면");
 
         //게임 시작
-       btnStartGame = (Button)findViewById(R.id.btnStartGame);
-
+        btnStartGame = (Button)findViewById(R.id.btnStartGame);
+        btnStartGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), Game.class);
+                startActivity(intent);
+            }
+        });
         //게임 규칙
         btnRules = (Button)findViewById(R.id.btnRules);
         btnRules.setOnClickListener(new View.OnClickListener() {

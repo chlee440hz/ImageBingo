@@ -31,24 +31,24 @@ public class Game extends AppCompatActivity {
             R.id.bingo15,
             R.id.bingo16,
     };
-    /*private static final int[] IMAGE_IDS = {
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3,
-            R.drawable.image4,
-            R.drawable.image5,
-            R.drawable.image6,
-            R.drawable.image7,
-            R.drawable.image8,
-            R.drawable.image9,
-            R.drawable.image10,
-            R.drawable.image11,
-            R.drawable.image12,
-            R.drawable.image13,
-            R.drawable.image14,
-            R.drawable.image15,
-            R.drawable.image16,
-    };*/
+    private static final int[] IMAGE_IDS = {
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+            R.drawable.logo,
+    };
 
 
     @Override
@@ -76,7 +76,7 @@ public class Game extends AppCompatActivity {
 
         for(int i = 0; i < 16; i++) {
             ImageButton button = (ImageButton)findViewById(BINGO_IDS[i]);
-            button.setImageResource(R.drawable.logo);
+            button.setImageResource(IMAGE_IDS[i]);
             bingo.add(button);
         }
     }
