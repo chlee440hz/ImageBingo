@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="15dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,17 +23,19 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
-        <Button
+        <ImageView
             android:background="#F1AFAE"
-            android:id="@+id/selectImage"
+            android:id="@+id/selectedImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
         <Button
             android:background="#EBEAEB"
             android:id="@+id/check"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -46,22 +49,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
-            <Button
+            <ImageButton
                 android:id="@+id/bingo1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -71,22 +74,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
-            <Button
+            <ImageButton
                 android:id="@+id/bingo5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -96,22 +99,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
-            <Button
+            <ImageButton
                 android:id="@+id/bingo9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo11"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo12"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -121,22 +124,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
-            <Button
+            <ImageButton
                 android:id="@+id/bingo13"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo15"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <Button
+            <ImageButton
                 android:id="@+id/bingo16"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
