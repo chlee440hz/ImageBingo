@@ -18,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".game.Game"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".help.Help"
             android:screenOrientation="portrait" />
         <activity
@@ -26,7 +29,6 @@
         <activity
             android:name=".info.Info"
             android:screenOrientation="portrait" />
-        <activity android:name=".game.Game"></activity>
     </application>
 
 </manifest>
