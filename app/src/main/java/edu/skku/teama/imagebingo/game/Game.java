@@ -2,17 +2,22 @@ package edu.skku.teama.imagebingo.game;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import edu.skku.teama.imagebingo.R;
 
 public class Game extends AppCompatActivity {
+    public int imageID;
+    HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+
     private static final int[] BINGO_IDS = {
             R.id.bingo00,
             R.id.bingo01,
@@ -41,7 +46,7 @@ public class Game extends AppCompatActivity {
             R.drawable.image_06,
             R.drawable.image_07,
             R.drawable.image_08,
-            R.drawable.image_00,
+            R.drawable.image_09,
             R.drawable.image_00,
             R.drawable.image_00,
             R.drawable.image_00,
@@ -60,11 +65,11 @@ public class Game extends AppCompatActivity {
             ran.add(i);
         }
         TextView state = (TextView) findViewById(R.id.state);
-        ImageView selectedImage = (ImageView) findViewById(R.id.selectedImage);
-        Button check = (Button) findViewById(R.id.check);
-        ArrayList<ImageButton> bingo = new ArrayList<ImageButton>();
+        final ImageView selectedImage = (ImageView) findViewById(R.id.selectedImage);
+        final Button check = (Button) findViewById(R.id.check);
+        final ArrayList<ImageButton> bingo = new ArrayList<ImageButton>();
 
-        Random bimag = new Random();
+        final Random bimag = new Random();
         Integer b[] = new Integer[16];
         int img[] = new int[16];
         for(int i = 0; i < 16; i++) {
@@ -75,8 +80,148 @@ public class Game extends AppCompatActivity {
 
         for(int i = 0; i < 16; i++) {
             ImageButton button = (ImageButton)findViewById(BINGO_IDS[i]);
-            button.setImageResource(IMAGE_IDS[i]);
+            button.setImageResource(IMAGE_IDS[b[i]]);
+            map.put(BINGO_IDS[i], IMAGE_IDS[b[i]]);
             bingo.add(button);
         }
+
+        check.setEnabled(false);
+
+        bingo.get(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[0]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[1]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[2]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[3]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[4]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[5]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[6]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(7).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[7]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(8).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[8]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(9).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[9]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(10).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[10]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(11).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[11]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(12).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[12]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(13).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[13]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(14).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[14]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+        bingo.get(15).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(true);
+                imageID = map.get(BINGO_IDS[15]);
+                selectedImage.setImageResource(imageID);
+            }
+        });
+
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check.setEnabled(false);
+                selectedImage.setImageResource(R.drawable.logo);
+            }
+        });
     }
 }
