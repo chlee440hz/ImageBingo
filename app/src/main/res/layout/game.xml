@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#c4c4cf"
     android:padding="15dp">
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,8 @@
             android:text="Hello World"
             android:textSize="40dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,12 +26,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
         <ImageView
-            android:background="#F1AFAE"
+            android:background="#ffffff"
             android:id="@+id/selectedImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:scaleType="centerCrop"/>
         <Button
             android:background="#EBEAEB"
             android:id="@+id/check"
@@ -41,11 +44,9 @@
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,22 +56,34 @@
                 android:id="@+id/bingo00"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo01"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo02"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo03"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,22 +93,34 @@
                 android:id="@+id/bingo04"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo05"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo06"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo07"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,22 +130,34 @@
                 android:id="@+id/bingo08"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo09"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo11"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,22 +167,34 @@
                 android:id="@+id/bingo12"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo13"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
             <ImageButton
                 android:id="@+id/bingo15"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="3dp"
+                android:background="#ffffff"
+                android:scaleType="centerCrop"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

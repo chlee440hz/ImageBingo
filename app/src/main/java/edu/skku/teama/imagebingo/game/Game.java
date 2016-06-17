@@ -86,6 +86,7 @@ public class Game extends AppCompatActivity {
         }
 
         check.setEnabled(false);
+        selectedImage.setImageResource(R.drawable.logo);
 
         bingo.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
