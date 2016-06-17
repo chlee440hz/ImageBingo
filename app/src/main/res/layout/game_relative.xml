@@ -60,7 +60,8 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="확인"
-                android:textSize="32dp" />
+                android:textSize="32dp"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
