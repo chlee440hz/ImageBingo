@@ -1,5 +1,6 @@
 package edu.skku.teama.imagebingo.game;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -86,12 +87,14 @@ public class Game extends AppCompatActivity {
         }
 
         check.setEnabled(false);
+        check.setBackgroundColor(Color.parseColor("#c4c4cf"));
         selectedImage.setImageResource(R.drawable.logo);
 
         bingo.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[0]);
                 selectedImage.setImageResource(imageID);
             }
@@ -100,6 +103,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[1]);
                 selectedImage.setImageResource(imageID);
             }
@@ -108,6 +112,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[2]);
                 selectedImage.setImageResource(imageID);
             }
@@ -116,6 +121,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[3]);
                 selectedImage.setImageResource(imageID);
             }
@@ -124,6 +130,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[4]);
                 selectedImage.setImageResource(imageID);
             }
@@ -132,6 +139,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[5]);
                 selectedImage.setImageResource(imageID);
             }
@@ -140,6 +148,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[6]);
                 selectedImage.setImageResource(imageID);
             }
@@ -148,6 +157,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[7]);
                 selectedImage.setImageResource(imageID);
             }
@@ -156,6 +166,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[8]);
                 selectedImage.setImageResource(imageID);
             }
@@ -164,6 +175,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[9]);
                 selectedImage.setImageResource(imageID);
             }
@@ -172,6 +184,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[10]);
                 selectedImage.setImageResource(imageID);
             }
@@ -180,6 +193,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[11]);
                 selectedImage.setImageResource(imageID);
             }
@@ -188,6 +202,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[12]);
                 selectedImage.setImageResource(imageID);
             }
@@ -196,6 +211,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[13]);
                 selectedImage.setImageResource(imageID);
             }
@@ -204,6 +220,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[14]);
                 selectedImage.setImageResource(imageID);
             }
@@ -212,6 +229,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(true);
+                check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[15]);
                 selectedImage.setImageResource(imageID);
             }
@@ -221,6 +239,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check.setEnabled(false);
+                check.setBackgroundColor(Color.parseColor("#c4c4cf"));
                 selectedImage.setImageResource(R.drawable.logo);
             }
         });
