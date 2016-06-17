@@ -89,7 +89,7 @@ public class Game extends AppCompatActivity {
 
         check.setEnabled(false);
         check.setBackgroundColor(Color.parseColor("#c4c4cf"));
-        selectedImage.setImageResource(R.drawable.logo);
+        selectedImage.setImageResource(R.drawable.selected);
         stateDetailed.setText("그림을 선택하세요");
 
         bingo.get(0).setOnClickListener(new View.OnClickListener() {
@@ -258,7 +258,7 @@ public class Game extends AppCompatActivity {
             public void onClick(View v) {
                 check.setEnabled(false);
                 check.setBackgroundColor(Color.parseColor("#c4c4cf"));
-                selectedImage.setImageResource(R.drawable.logo);
+                selectedImage.setImageResource(R.drawable.selected);
                 stateDetailed.setText("그림을 선택하세요");
             }
         });
