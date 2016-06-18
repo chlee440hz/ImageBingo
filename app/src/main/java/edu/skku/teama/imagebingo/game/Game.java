@@ -27,6 +27,7 @@ public class Game extends AppCompatActivity {
     private Button check;
     private ArrayList<ImageButton> bingo;
     private int numOfBingo;
+    private ArrayList<Integer> enableButtons;
     private ArrayList<Integer> checkBingo00;
     private ArrayList<Integer> checkBingo01;
     private ArrayList<Integer> checkBingo02;
@@ -129,21 +130,27 @@ public class Game extends AppCompatActivity {
                     check.setEnabled(false);
                     check.setBackgroundColor(Color.parseColor("#c4c4cf"));
                     selectedImage.setImageResource(R.drawable.selected);
-                    bingo.get(i).setEnabled(false);
+                    Integer ch = new Integer(i);
+                    enableButtons.remove(ch);
+                    for (int j = 0; j < enableButtons.size(); j++) {
+                        bingo.get(enableButtons.get(j)).setEnabled(false);
+                    }
                     bingo.get(i).setImageResource(R.drawable.selected);
+                    //push imageID, infoV
                     CheckBingo(i);
                     if (numOfBingo < 3) {
                         stateDetailed.setText("그림을 선택하세요");
                     } else {
                         state.setText("승리!!!!");
                         stateDetailed.setText("축하합니다.");
+                        check.setEnabled(true);
                         for (int j = 0; j < 16; j++) {
                             bingo.get(j).setEnabled(false);
                         }
-                        check.setEnabled(true);
                         check.setBackgroundColor(Color.parseColor("#96CDCD"));
-                        Toast.makeText(getApplicationContext(), "Victory!", Toast.LENGTH_SHORT).show();
-                        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#d15354"));
+                        Toast.makeText(getApplicationContext(), "Victory!", Toast.LENGTH_LONG).show();
+                        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
+                        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#d15354"));
                     }
                 } else {
                     finish();
@@ -158,6 +165,9 @@ public class Game extends AppCompatActivity {
                 check.setEnabled(true);
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
                 imageID = map.get(BINGO_IDS[i]);
+                for (int j = 0; j < 16; j++) {
+                    bingo.get(j).setEnabled(false);
+                }
                 selectedImage.setImageResource(imageID);
                 stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
                 CheckMethod(i);
@@ -190,6 +200,7 @@ public class Game extends AppCompatActivity {
         checkBingo07 = new ArrayList<Integer>();
         checkBingo08 = new ArrayList<Integer>();
         checkBingo09 = new ArrayList<Integer>();
+        enableButtons = new ArrayList<Integer>();
 
         final Random bimag = new Random();
         Integer b[] = new Integer[16];
@@ -213,6 +224,7 @@ public class Game extends AppCompatActivity {
         stateDetailed.setText("그림을 선택하세요");
 
         for(int i = 0; i < 16; i++) {
+            enableButtons.add(i);
             ButtonMethod(i);
         }
     }
