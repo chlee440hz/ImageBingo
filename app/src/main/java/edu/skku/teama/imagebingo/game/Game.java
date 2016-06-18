@@ -1,10 +1,16 @@
 package edu.skku.teama.imagebingo.game;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,6 +44,7 @@ public class Game extends AppCompatActivity {
     private ArrayList<Integer> checkBingo07;
     private ArrayList<Integer> checkBingo08;
     private ArrayList<Integer> checkBingo09;
+    private String mainAdr;
 
     private static final int[] BINGO_IDS = {
             R.id.bingo00,
@@ -175,11 +182,83 @@ public class Game extends AppCompatActivity {
         });
     }
 
+    //공격 플레이어 연결 다이얼로그
+    private void SetConnect(){
+        final String items[] = {"기기1", "기기2", "기기3", "기기4", "기기5"};
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("연결 가능한 기기");
+        alert.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener(
+        ){
+            public void onClick(DialogInterface dialog, int btnNum){
+
+            }
+            }).setPositiveButton("연결", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        }).setNegativeButton("취소", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener(){
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        }).show();
+    }
+
+    //수비 플레이어 대기 다이얼로그
+    private void WaitConnect(){
+        ProgressDialog dialog = ProgressDialog.show(
+                this,
+                "연결중",
+                "잠시만 기다려 주세요",
+                true,
+                true,
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+        if(false){
+            dialog.dismiss();
+        }
+    }
+
+    //플레이어 순서 선택 다이얼로그
+    private void SetPlayerNum(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("공격/수비 중 하나를 선택해 주세요"
+        ).setPositiveButton("공격", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                SetConnect();
+            }
+        }).setNegativeButton("방어", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                WaitConnect();
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener(){
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        }).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_relative);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#c4c4cf"));
+
+        SetPlayerNum();
+
         ArrayList<Integer> ran = new ArrayList<Integer>();
         for(int i = 0; i < 16; i++) {
             ran.add(i);
