@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.skku.teama.imagebingo.R;
+import edu.skku.teama.imagebingo.connectBT.ConnectBT;
 import edu.skku.teama.imagebingo.game.Game;
 import edu.skku.teama.imagebingo.help.Help;
 import edu.skku.teama.imagebingo.info.Info;
@@ -27,7 +28,7 @@ public class Main extends AppCompatActivity {
         btnStartGame = (Button)findViewById(R.id.btnStartGame);
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), Game.class);
+                Intent intent = new Intent(getApplicationContext(), ConnectBT.class);
                 startActivity(intent);
             }
         });
