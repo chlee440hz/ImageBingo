@@ -232,13 +232,13 @@ public class Game extends AppCompatActivity {
     //플레이어 순서 선택 다이얼로그
     private void SetPlayerNum(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setMessage("공격/수비 중 하나를 선택해 주세요"
-        ).setPositiveButton("공격", new DialogInterface.OnClickListener() {
+        alert.setMessage("선공/후공을 결정해 주세요"
+        ).setNegativeButton("선공", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 SetConnect();
             }
-        }).setNegativeButton("방어", new DialogInterface.OnClickListener(){
+        }).setPositiveButton("후공", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 WaitConnect();
