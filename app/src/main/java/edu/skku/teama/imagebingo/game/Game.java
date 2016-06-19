@@ -60,7 +60,6 @@ public class Game extends AppCompatActivity {
     private ArrayList<Integer> checkBingo07;
     private ArrayList<Integer> checkBingo08;
     private ArrayList<Integer> checkBingo09;
-
     private static final int[] BINGO_IDS = {
             R.id.bingo00,
             R.id.bingo01,
@@ -98,7 +97,6 @@ public class Game extends AppCompatActivity {
             R.drawable.image_15,
     };
 
-
     static final int ACTION_ENABLE_BT = 101;
     BluetoothAdapter mBA;
     ArrayList<String> mArDevice; // 원격 디바이스 목록
@@ -117,19 +115,13 @@ public class Game extends AppCompatActivity {
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#c4c4cf"));
         keep = 0;
         mArDevice = new ArrayList<String>();
-
         // 블루투스 사용 가능상태 판단
         boolean isBlue = canUseBluetooth();
-        if( isBlue )
-            // 페어링된 원격 디바이스 목록 구하기
+        if(isBlue) {
             getParedDevice();
-
+        }
         SetPlayerNum();
 
-        ArrayList<Integer> ran = new ArrayList<Integer>();
-        for(int i = 0; i < 16; i++) {
-            ran.add(i);
-        }
         state = (TextView) findViewById(R.id.state);
         selectedImage = (ImageView) findViewById(R.id.selectedImage);
         stateDetailed = (TextView) findViewById(R.id.stateDetailed);
@@ -147,7 +139,10 @@ public class Game extends AppCompatActivity {
         checkBingo08 = new ArrayList<Integer>();
         checkBingo09 = new ArrayList<Integer>();
         enableButtons = new ArrayList<Integer>();
-
+        ArrayList<Integer> ran = new ArrayList<Integer>();
+        for(int i = 0; i < 16; i++) {
+            ran.add(i);
+        }
         final Random bimag = new Random();
         Integer b[] = new Integer[16];
         int img[] = new int[16];
@@ -156,7 +151,6 @@ public class Game extends AppCompatActivity {
             b[i] = ran.get(j);
             ran.remove(j);
         }
-
         for(int i = 0; i < 16; i++) {
             ImageButton button = (ImageButton)findViewById(BINGO_IDS[i]);
             button.setImageResource(IMAGE_IDS[b[i]]);
@@ -168,8 +162,6 @@ public class Game extends AppCompatActivity {
         check.setEnabled(false);
         check.setBackgroundColor(Color.parseColor("#c4c4cf"));
         selectedImage.setImageResource(R.drawable.selected);
-        stateDetailed.setText("그림을 선택하세요");
-
         for(int i = 0; i < 16; i++) {
             enableButtons.add(i);
             ButtonMethod(i);
@@ -237,11 +229,14 @@ public class Game extends AppCompatActivity {
                         bingo.get(enableButtons.get(j)).setEnabled(false);
                     }
                     bingo.get(i).setImageResource(R.drawable.selected);
+                    bingo.get(i).setEnabled(false);
                     if( mSocketThread == null ) return;
                     // 사용자가 입력한 텍스트를 소켓으로 전송한다
                     String strBuf = map.get(BINGO_IDS[i]).toString();
                     strBuf += "-"+numOfBingo;
-                    if( strBuf.length() < 1 ) return;
+                    if( strBuf.length() < 1 ) {
+                        return;
+                    }
                     mSocketThread.write(strBuf);
                     if (numOfBingo < 3) {
                         state.setText("상대턴");
@@ -277,34 +272,30 @@ public class Game extends AppCompatActivity {
             }
         });
     }
-
 //----------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------
-//플레이어 순서 선택 다이얼로그
-private void SetPlayerNum(){
-    android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
-    alert.setMessage("선공/후공을 결정해 주세요"
-    ).setNegativeButton("선공", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int id) {
-            SetConnect();
-        }
-    }).setPositiveButton("후공", new DialogInterface.OnClickListener(){
-        @Override
-        public void onClick(DialogInterface dialog, int id) {
-            WaitConnect();
-        }
-    }).setOnCancelListener(new DialogInterface.OnCancelListener(){
-        @Override
-        public void onCancel(DialogInterface dialog) {
-            Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }).show();
-}
-
+    //플레이어 순서 선택 다이얼로그
+    private void SetPlayerNum() {
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
+        alert.setMessage("선공/후공을 결정해 주세요.").setNegativeButton("성공", new DialogInterface.OnClickListener() {
+            @Override
+            public  void onClick(DialogInterface dialog, int id) {
+                SetConnect();
+            }
+        }).setPositiveButton("후공", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                WaitConnect();
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public  void onCancel(DialogInterface dialog) {
+                Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).show();
+    }
     //공격 플레이어 연결 다이얼로그
-    private void SetConnect(){
+    private void SetConnect() {
         android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
         alert.setTitle("연결할 기기를 선택해 주세요");
         final ArrayAdapter<String> deviceName = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice, mArDevice);
@@ -323,14 +314,14 @@ private void SetPlayerNum(){
                         int pos = strItem.indexOf(" - ");
                         if( pos <= 0 ) return;
                         String address = strItem.substring(pos + 3);
-
                         // 디바이스 검색 중지
                         stopFindDevice();
                         // 서버 소켓 스레드 중지
                         mSThread.cancel();
                         mSThread = null;
-
-                        if( mCThread != null ) return;
+                        if(mCThread != null) {
+                            return;
+                        }
                         // 상대방 디바이스를 구한다
                         BluetoothDevice device = mBA.getRemoteDevice(address);
                         // 클라이언트 소켓 스레드 생성 & 시작
@@ -352,9 +343,8 @@ private void SetPlayerNum(){
         });
         alert.show();
     }
-
     //수비 플레이어 대기 다이얼로그
-    private void WaitConnect(){
+    private void WaitConnect() {
         attack = false;
         for(int i = 0; i < 16; i++) {
             bingo.get(i).setEnabled(attack);
@@ -376,39 +366,34 @@ private void SetPlayerNum(){
                 });
     }
 //--------------------------------------------------------------------------------------------------
-
     // 블루투스 사용 가능상태 판단
     public boolean canUseBluetooth() {
         // 블루투스 어댑터를 구한다
         mBA = BluetoothAdapter.getDefaultAdapter();
         // 블루투스 어댑터가 null 이면 블루투스 장비가 존재하지 않는다.
-        if( mBA == null ) {
+        if(mBA == null) {
             return false;
         }
-
         // 블루투스 활성화 상태라면 함수 탈출
-        if( mBA.isEnabled() ) {
+        if(mBA.isEnabled()) {
             return true;
         }
-
         // 사용자에게 블루투스 활성화를 요청한다
         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(intent, ACTION_ENABLE_BT);
         return false;
     }
-
     // 블루투스 활성화 요청 결과 수신
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode == ACTION_ENABLE_BT ) {
+        if(requestCode == ACTION_ENABLE_BT) {
             // 사용자가 블루투스 활성화 승인했을때
-            if( resultCode == RESULT_OK ) {
+            if(resultCode == RESULT_OK) {
                 // 페어링된 원격 디바이스 목록 구하기
                 getParedDevice();
             }
             // 사용자가 블루투스 활성화 취소했을때
         }
     }
-
     // 원격 디바이스 검색 시작
     public void startFindDevice() {
         // 원격 디바이스 검색 중지
@@ -416,33 +401,30 @@ private void SetPlayerNum(){
         // 디바이스 검색 시작
         mBA.startDiscovery();
         // 원격 디바이스 검색 이벤트 리시버 등록
-        registerReceiver(mBlueRecv, new IntentFilter( BluetoothDevice.ACTION_FOUND ));
+        registerReceiver(mBlueRecv, new IntentFilter(BluetoothDevice.ACTION_FOUND));
     }
-
     // 디바이스 검색 중지
     public void stopFindDevice() {
         // 현재 디바이스 검색 중이라면 취소한다
-        if( mBA.isDiscovering() ) {
+        if(mBA.isDiscovering()) {
             mBA.cancelDiscovery();
             // 브로드캐스트 리시버를 등록 해제한다
             unregisterReceiver(mBlueRecv);
         }
     }
-
     // 원격 디바이스 검색 이벤트 수신
     BroadcastReceiver mBlueRecv = new BroadcastReceiver() {
-        public void  onReceive(Context context, Intent intent) {
-            if( intent.getAction() == BluetoothDevice.ACTION_FOUND ) {
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction() == BluetoothDevice.ACTION_FOUND) {
                 // 인텐트에서 디바이스 정보 추출
-                BluetoothDevice device = intent.getParcelableExtra( BluetoothDevice.EXTRA_DEVICE );
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // 페어링된 디바이스가 아니라면
-                if( device.getBondState() != BluetoothDevice.BOND_BONDED )
+                if(device.getBondState() != BluetoothDevice.BOND_BONDED)
                     // 디바이스를 목록에 추가
                     addDeviceToList(device.getName(), device.getAddress());
             }
         }
     };
-
     // 디바이스를 ListView 에 추가
     public void addDeviceToList(String name, String address) {
         // ListView 와 연결된 ArrayList 에 새로운 항목을 추가
@@ -450,71 +432,40 @@ private void SetPlayerNum(){
         Log.d("tag1", "Device Find: " + deviceInfo);
         mArDevice.add(deviceInfo);
     }
-
-    // ListView 초기화
-
-
     // 다른 디바이스에게 자신을 검색 허용
     public void setDiscoverable() {
         // 현재 검색 허용 상태라면 함수 탈출
-        if( mBA.getScanMode() == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE )
+        if(mBA.getScanMode() == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             return;
+        }
         // 다른 디바이스에게 자신을 검색 허용 지정
         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0);
         startActivity(intent);
     }
-
     // 페어링된 원격 디바이스 목록 구하기
     public void getParedDevice() {
-        if( mSThread != null ) return;
+        if(mSThread != null) {
+            return;
+        }
         // 서버 소켓 접속을 위한 스레드 생성 & 시작
         mSThread = new ServerThread();
         mSThread.start();
-
         // 블루투스 어댑터에서 페어링된 원격 디바이스 목록을 구한다
         Set<BluetoothDevice> devices = mBA.getBondedDevices();
         // 디바이스 목록에서 하나씩 추출
-        for( BluetoothDevice device : devices ) {
+        for(BluetoothDevice device : devices) {
             // 디바이스를 목록에 추가
             addDeviceToList(device.getName(), device.getAddress());
         }
-
         // 원격 디바이스 검색 시작
         startFindDevice();
-
         // 다른 디바이스에 자신을 노출
         setDiscoverable();
     }
-
-    // ListView 항목 선택 이벤트 함수
-    public void onItemClick(AdapterView parent, View view, int position, long id) {
-        // 사용자가 선택한 항목의 내용을 구한다
-        String strItem = mArDevice.get(position);
-
-        // 사용자가 선택한 디바이스의 주소를 구한다
-        int pos = strItem.indexOf(" - ");
-        if( pos <= 0 ) return;
-        String address = strItem.substring(pos + 3);
-
-        // 디바이스 검색 중지
-        stopFindDevice();
-        // 서버 소켓 스레드 중지
-        mSThread.cancel();
-        mSThread = null;
-
-        if( mCThread != null ) return;
-        // 상대방 디바이스를 구한다
-        BluetoothDevice device = mBA.getRemoteDevice(address);
-        // 클라이언트 소켓 스레드 생성 & 시작
-        mCThread = new ClientThread(device);
-        mCThread.start();
-    }
-
     // 클라이언트 소켓 생성을 위한 스레드
     private class ClientThread extends Thread {
         private BluetoothSocket mmCSocket;
-
         // 원격 디바이스와 접속을 위한 클라이언트 소켓 생성
         public ClientThread(BluetoothDevice  device) {
             try {
@@ -524,7 +475,6 @@ private void SetPlayerNum(){
                 return;
             }
         }
-
         public void run() {
             // 원격 디바이스와 접속 시도
             try {
@@ -539,11 +489,9 @@ private void SetPlayerNum(){
                 }
                 return;
             }
-
             // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
             onConnected(mmCSocket);
         }
-
         // 클라이언트 소켓 중지
         public void cancel() {
             try {
@@ -553,11 +501,9 @@ private void SetPlayerNum(){
             }
         }
     }
-
     // 서버 소켓을 생성해서 접속이 들어오면 클라이언트 소켓을 생성하는 스레드
     private class ServerThread extends Thread {
         private BluetoothServerSocket mmSSocket;
-
         // 서버 소켓 생성
         public ServerThread() {
             try {
@@ -566,10 +512,8 @@ private void SetPlayerNum(){
                 //showMessage("Get Server Socket Error");
             }
         }
-
         public void run() {
             BluetoothSocket cSocket = null;
-
             // 원격 디바이스에서 접속을 요청할 때까지 기다린다
             try {
                 cSocket = mmSSocket.accept();
@@ -577,11 +521,9 @@ private void SetPlayerNum(){
                 //showMessage("Socket Accept Error");
                 return;
             }
-
             // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
             onConnected(cSocket);
         }
-
         // 서버 소켓 중지
         public void cancel() {
             try {
@@ -591,15 +533,13 @@ private void SetPlayerNum(){
             }
         }
     }
-
     public void receivedImage(String strMsg) {
         // 메시지 텍스트를 핸들러에 전달
         Message msg = Message.obtain(iHandler, 0, strMsg);
         iHandler.sendMessage(msg);
         Log.d("tag1", strMsg);
     }
-
-    // 메시지 화면 출력을 위한 핸들러
+    // 이미지 전달을 위한 핸들러
     Handler iHandler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
@@ -644,31 +584,27 @@ private void SetPlayerNum(){
             }
         }
     };
-
     // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
     public void onConnected(BluetoothSocket socket) {
-
         //프로그레스 다이얼로그 종료
-        if(dialog != null) dialog.dismiss();
-
+        if(dialog != null) {
+            dialog.dismiss();
+        }
         // 데이터 송수신 스레드가 생성되어 있다면 삭제한다
-        if( mSocketThread != null )
+        if(mSocketThread != null)
             mSocketThread = null;
         // 데이터 송수신 스레드를 시작
         mSocketThread = new SocketThread(socket);
         mSocketThread.start();
     }
-
     // 데이터 송수신 스레드
     private class SocketThread extends Thread {
-
         private final BluetoothSocket mmSocket; // 클라이언트 소켓
         private InputStream mmInStream; // 입력 스트림
         private OutputStream mmOutStream; // 출력 스트림
 
         public SocketThread(BluetoothSocket socket) {
             mmSocket = socket;
-
             // 입력 스트림과 출력 스트림을 구한다
             try {
                 mmInStream = socket.getInputStream();
@@ -677,7 +613,6 @@ private void SetPlayerNum(){
 //                showMessage("Get Stream error");
             }
         }
-
         // 소켓에서 수신된 데이터를 화면에 표시한다
         public void run() {
             byte[] buffer = new byte[1024];
@@ -696,7 +631,6 @@ private void SetPlayerNum(){
                 }
             }
         }
-
         // 데이터를 소켓으로 전송한다
         public void write(String strBuf) {
             try {
@@ -708,27 +642,22 @@ private void SetPlayerNum(){
             }
         }
     }
-
-    // 버튼 클릭 이벤트 함수
-
-
     // 앱이 종료될 때 디바이스 검색 중지
     public void onDestroy() {
         super.onDestroy();
         // 디바이스 검색 중지
         stopFindDevice();
-
         // 스레드를 종료
-        if( mCThread != null ) {
+        if(mCThread != null) {
             mCThread.cancel();
             mCThread = null;
         }
-        if( mSThread != null ) {
+        if(mSThread != null) {
             mSThread.cancel();
             mSThread = null;
         }
-        if( mSocketThread != null )
+        if(mSocketThread != null) {
             mSocketThread = null;
+        }
     }
-
 }

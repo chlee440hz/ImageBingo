@@ -10,21 +10,17 @@
         android:layout_height="match_parent"
         android:layout_weight="6"
         android:orientation="vertical">
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/logo"
             android:layout_gravity="center"/>
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="10"
         android:orientation="vertical">
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,7 +31,6 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:id="@+id/btnStartGame"/>
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,7 +41,6 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:id="@+id/btnHelp"/>
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -58,5 +52,4 @@
             android:textStyle="bold"
             android:id="@+id/btnExit"/>
     </LinearLayout>
-
 </LinearLayout>
