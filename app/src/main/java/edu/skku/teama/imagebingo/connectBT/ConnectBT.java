@@ -31,6 +31,7 @@ public class ConnectBT extends Activity
     ClientThread mCThread = null; // 클라이언트 소켓 접속 스레드
     ServerThread mSThread = null; // 서버 소켓 접속 스레드
     SocketThread mSocketThread = null; // 데이터 송수신 스레드
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,43 @@ public class ConnectBT extends Activity
             // 페어링된 원격 디바이스 목록 구하기
             getParedDevice();
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        SetPlayerNum();
+
+        btnStartGame = (Button)findViewById(R.id.btnStartGame);
+        btnStartGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), Game.class);
+                startActivity(intent);
+            }
+        });
+    }
+//--------------------------------------------------------------------------------------------------
+    //플레이어 순서 선택 다이얼로그
+    private void SetPlayerNum(){
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
+        alert.setMessage("선공/후공을 결정해 주세요"
+        ).setNegativeButton("선공", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                SetConnect();
+            }
+        }).setPositiveButton("후공", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                WaitConnect();
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener(){
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }).show();
+    }
+
+    //공격 플레이어 연결 다이얼로그
+    private void SetConnect(){
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
         alert.setTitle("연결할 기기를 선택해 주세요");
         final ArrayAdapter<String> deviceName = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice, mArDevice);
         alert.setAdapter(deviceName,
@@ -80,25 +117,39 @@ public class ConnectBT extends Activity
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
-                //finish();
+                finish();
             }
         }).setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
-                //finish();
+                finish();
             }
         });
         alert.show();
-
-        btnStartGame = (Button)findViewById(R.id.btnStartGame);
-        btnStartGame.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), Game.class);
-                startActivity(intent);
-            }
-        });
     }
+
+    //수비 플레이어 대기 다이얼로그
+    private void WaitConnect(){
+        dialog = ProgressDialog.show(
+                this,
+                "연결중",
+                "잠시만 기다려 주세요",
+                true,
+                true,
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+        //if(mSocketThread != null){
+            //상대방과 연결되었을 때
+          //  dialog.dismiss();
+        //}
+    }
+//--------------------------------------------------------------------------------------------------
 
     // 블루투스 사용 가능상태 판단
     public boolean canUseBluetooth() {
@@ -356,6 +407,7 @@ public class ConnectBT extends Activity
     // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
     public void onConnected(BluetoothSocket socket) {
         showMessage("Socket connected");
+        if(dialog != null) dialog.dismiss();
 
         // 데이터 송수신 스레드가 생성되어 있다면 삭제한다
         if( mSocketThread != null )
