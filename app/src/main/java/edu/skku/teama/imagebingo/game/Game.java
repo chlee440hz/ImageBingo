@@ -164,7 +164,6 @@ public class Game extends AppCompatActivity {
         for(int i = 0; i < 16; i++) {
             ImageButton button = (ImageButton)findViewById(BINGO_IDS[i]);
             button.setImageResource(IMAGE_IDS[b[i]]);
-            button.setEnabled(attack);
             map.put(BINGO_IDS[i], b[i]);
             map1.put(b[i], i);
             bingo.add(button);
@@ -294,13 +293,11 @@ private void SetPlayerNum(){
         @Override
         public void onClick(DialogInterface dialog, int id) {
             SetConnect();
-            attack = true;
         }
     }).setPositiveButton("후공", new DialogInterface.OnClickListener(){
         @Override
         public void onClick(DialogInterface dialog, int id) {
             WaitConnect();
-            attack =false;
         }
     }).setOnCancelListener(new DialogInterface.OnCancelListener(){
         @Override
@@ -321,6 +318,10 @@ private void SetPlayerNum(){
                     public void onClick(DialogInterface dialog, int id) {
                         // 사용자가 선택한 항목의 내용을 구한다
                         String strItem = mArDevice.get(id);
+                        attack = true;
+                        for(int i = 0; i < 16; i++) {
+                            bingo.get(i).setEnabled(attack);
+                        }
 
                         // 사용자가 선택한 디바이스의 주소를 구한다
                         int pos = strItem.indexOf(" - ");
@@ -359,6 +360,10 @@ private void SetPlayerNum(){
 
     //수비 플레이어 대기 다이얼로그
     private void WaitConnect(){
+        attack = false;
+        for(int i = 0; i < 16; i++) {
+            bingo.get(i).setEnabled(attack);
+        }
         dialog = ProgressDialog.show(
                 this,
                 "연결중",
