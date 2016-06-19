@@ -40,7 +40,9 @@ import edu.skku.teama.imagebingo.R;
 
 public class Game extends AppCompatActivity {
     private int imageID;
+    private int keep;
     private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+    private HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>();
     private TextView state;
     private ImageView selectedImage;
     private TextView stateDetailed;
@@ -114,7 +116,7 @@ public class Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_relative);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#c4c4cf"));
-
+        keep = 0;
         mTextMsg = (TextView)findViewById(R.id.textMessage);
         // ListView 초기화
         mArDevice = new ArrayList<String>();
@@ -161,7 +163,8 @@ public class Game extends AppCompatActivity {
         for(int i = 0; i < 16; i++) {
             ImageButton button = (ImageButton)findViewById(BINGO_IDS[i]);
             button.setImageResource(IMAGE_IDS[b[i]]);
-            map.put(BINGO_IDS[i], IMAGE_IDS[b[i]]);
+            map.put(BINGO_IDS[i], b[i]);
+            map1.put(b[i], i);
             bingo.add(button);
         }
 
@@ -226,10 +229,11 @@ public class Game extends AppCompatActivity {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numOfBingo < 3) {
+                if(keep == 0) {
                     check.setEnabled(false);
                     check.setBackgroundColor(Color.parseColor("#c4c4cf"));
                     selectedImage.setImageResource(R.drawable.selected);
+                    CheckBingo(i);
                     Integer ch = new Integer(i);
                     enableButtons.remove(ch);
                     for (int j = 0; j < enableButtons.size(); j++) {
@@ -239,13 +243,15 @@ public class Game extends AppCompatActivity {
                     if( mSocketThread == null ) return;
                     // 사용자가 입력한 텍스트를 소켓으로 전송한다
                     String strBuf = map.get(BINGO_IDS[i]).toString();
+                    strBuf += "-"+numOfBingo;
                     if( strBuf.length() < 1 ) return;
                     mSocketThread.write(strBuf);
                     //push imageID, infoV
-                    CheckBingo(i);
                     if (numOfBingo < 3) {
-                        stateDetailed.setText("그림을 선택하세요");
+                        state.setText("상대턴");
+                        stateDetailed.setText("잠시만 기다려주세요");
                     } else {
+                        keep = 1;
                         state.setText("승리!!!!");
                         stateDetailed.setText("축하합니다.");
                         check.setEnabled(true);
@@ -255,7 +261,6 @@ public class Game extends AppCompatActivity {
                         check.setBackgroundColor(Color.parseColor("#96CDCD"));
                         Toast.makeText(getApplicationContext(), "Victory!", Toast.LENGTH_LONG).show();
                         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
-                        //getWindow().getDecorView().setBackgroundColor(Color.parseColor("#d15354"));
                     }
                 } else {
                     finish();
@@ -269,10 +274,7 @@ public class Game extends AppCompatActivity {
             public void onClick(View v) {
                 check.setEnabled(true);
                 check.setBackgroundColor(Color.parseColor("#96CDCD"));
-                imageID = map.get(BINGO_IDS[i]);
-                for (int j = 0; j < 16; j++) {
-                    bingo.get(j).setEnabled(false);
-                }
+                imageID = IMAGE_IDS[map.get(BINGO_IDS[i])];
                 selectedImage.setImageResource(imageID);
                 stateDetailed.setText("선택한 그림이 맞으면 확인 버튼을 누르세요");
                 CheckMethod(i);
@@ -606,6 +608,56 @@ private void SetPlayerNum(){
             if (msg.what == 0) {
                 String strMsg = (String)msg.obj;
                 mTextMsg.setText(strMsg);
+
+            }
+        }
+    };
+    public void receivedImage(String strMsg) {
+        // 메시지 텍스트를 핸들러에 전달
+        Message msg = Message.obtain(iHandler, 0, strMsg);
+        iHandler.sendMessage(msg);
+        Log.d("tag1", strMsg);
+    }
+
+    // 메시지 화면 출력을 위한 핸들러
+    Handler iHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                String strMsg = (String)msg.obj;
+                String strArr[] = strMsg.split("-");
+                int index = Integer.parseInt(strArr[0]);
+                if(Integer.parseInt(strArr[1]) >= 3) {
+                    check.setBackgroundColor(Color.parseColor("#96CDCD"));
+                    getWindow().getDecorView().setBackgroundColor(Color.parseColor("#d15354"));
+                    Toast.makeText(getApplicationContext(), "Defeated!", Toast.LENGTH_LONG).show();
+                    state.setText("패배!!!!");
+                    stateDetailed.setText("다음 기회에...");
+                    keep = 1;
+                    check.setEnabled(true);
+                    for (int j = 0; j < 16; j++) {
+                        bingo.get(j).setEnabled(false);
+                    }
+                    return;
+                }
+                state.setText("당신턴");
+                stateDetailed.setText("그림을 선택해주세요");
+                selectedImage.setImageResource(IMAGE_IDS[index]);
+                Integer ch = new Integer(map1.get(index));
+                bingo.get(ch).setImageResource(R.drawable.selected);
+                bingo.get(ch).setEnabled(false);
+                CheckBingo(ch);
+                enableButtons.remove(ch);
+                if(numOfBingo >= 3) {
+                    keep = 1;
+                    check.setBackgroundColor(Color.parseColor("#96CDCD"));
+                    Toast.makeText(getApplicationContext(), "Victory!", Toast.LENGTH_LONG).show();
+                    getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
+                    strMsg = strArr[0] + "-" + numOfBingo;
+                    mSocketThread.write(strMsg);
+                }
+                for (int j = 0; j < enableButtons.size(); j++) {
+                    bingo.get(enableButtons.get(j)).setEnabled(true);
+                }
             }
         }
     };
@@ -627,6 +679,7 @@ private void SetPlayerNum(){
 
     // 데이터 송수신 스레드
     private class SocketThread extends Thread {
+
         private final BluetoothSocket mmSocket; // 클라이언트 소켓
         private InputStream mmInStream; // 입력 스트림
         private OutputStream mmOutStream; // 출력 스트림
@@ -654,6 +707,7 @@ private void SetPlayerNum(){
                     bytes = mmInStream.read(buffer);
                     String strBuf = new String(buffer, 0, bytes);
                     showMessage("Receive: " + strBuf);
+                    receivedImage(strBuf);
                     SystemClock.sleep(1);
                 } catch (IOException e) {
                     showMessage("Socket disconneted");
