@@ -4,9 +4,11 @@ import java.io.*;
 import java.util.*;
 
 import android.app.*;
+import android.app.AlertDialog;
 import android.bluetooth.*;
 import android.content.*;
 import android.os.*;
+import android.support.v7.app.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -44,6 +46,50 @@ public class ConnectBT extends Activity
         if( isBlue )
             // 페어링된 원격 디바이스 목록 구하기
             getParedDevice();
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("연결할 기기를 선택해 주세요");
+        final ArrayAdapter<String> deviceName = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice, mArDevice);
+        alert.setAdapter(deviceName,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // 사용자가 선택한 항목의 내용을 구한다
+                        String strItem = mArDevice.get(id);
+
+                        // 사용자가 선택한 디바이스의 주소를 구한다
+                        int pos = strItem.indexOf(" - ");
+                        if( pos <= 0 ) return;
+                        String address = strItem.substring(pos + 3);
+                        mTextMsg.setText("Sel Device: " + address);
+
+                        // 디바이스 검색 중지
+                        stopFindDevice();
+                        // 서버 소켓 스레드 중지
+                        mSThread.cancel();
+                        mSThread = null;
+
+                        if( mCThread != null ) return;
+                        // 상대방 디바이스를 구한다
+                        BluetoothDevice device = mBA.getRemoteDevice(address);
+                        // 클라이언트 소켓 스레드 생성 & 시작
+                        mCThread = new ClientThread(device);
+                        mCThread.start();
+                        Toast.makeText(getApplicationContext(), deviceName.getItem(id) + "와(과) 연결되었습니다", Toast.LENGTH_SHORT).show();
+                    }
+                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                //finish();
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                //finish();
+            }
+        });
+        alert.show();
 
         btnStartGame = (Button)findViewById(R.id.btnStartGame);
         btnStartGame.setOnClickListener(new View.OnClickListener() {
