@@ -41,6 +41,7 @@ import edu.skku.teama.imagebingo.R;
 public class Game extends AppCompatActivity {
     private int imageID;
     private int keep;
+    private boolean attack;
     private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     private HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>();
     private TextView state;
@@ -163,6 +164,7 @@ public class Game extends AppCompatActivity {
         for(int i = 0; i < 16; i++) {
             ImageButton button = (ImageButton)findViewById(BINGO_IDS[i]);
             button.setImageResource(IMAGE_IDS[b[i]]);
+            button.setEnabled(attack);
             map.put(BINGO_IDS[i], b[i]);
             map1.put(b[i], i);
             bingo.add(button);
@@ -292,11 +294,13 @@ private void SetPlayerNum(){
         @Override
         public void onClick(DialogInterface dialog, int id) {
             SetConnect();
+            attack = true;
         }
     }).setPositiveButton("후공", new DialogInterface.OnClickListener(){
         @Override
         public void onClick(DialogInterface dialog, int id) {
             WaitConnect();
+            attack =false;
         }
     }).setOnCancelListener(new DialogInterface.OnCancelListener(){
         @Override
