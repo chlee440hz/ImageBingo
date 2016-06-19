@@ -50,8 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="#ffffff"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"/>
             <Button
                 android:id="@+id/check"
                 android:layout_width="match_parent"
@@ -83,7 +82,8 @@
                     android:layout_margin="3dp"
                     android:layout_weight="1"
                     android:background="#ffffff"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    style="@style/Base.Widget.AppCompat.ImageButton"/>
                 <ImageButton
                     android:id="@+id/bingo01"
                     android:layout_width="match_parent"

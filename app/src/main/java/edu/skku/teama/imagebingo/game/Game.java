@@ -181,33 +181,36 @@ public class Game extends AppCompatActivity {
             }
         });
     }
-
+//--------------------------------------------------------------------------------------------------
     //공격 플레이어 연결 다이얼로그
     private void SetConnect(){
-        final String items[] = {"기기1", "기기2", "기기3", "기기4", "기기5"};
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("연결 가능한 기기");
-        alert.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener(
-        ){
-            public void onClick(DialogInterface dialog, int btnNum){
-
-            }
-            }).setPositiveButton("연결", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-        }).setNegativeButton("취소", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                finish();
-            }
-        }).setOnCancelListener(new DialogInterface.OnCancelListener(){
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                finish();
-            }
-        }).show();
+        alert.setTitle("연결할 기기를 선택해 주세요");
+        final ArrayAdapter<String> deviceName = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
+        deviceName.add("기기 01");
+        deviceName.add("기기 02");
+        deviceName.add("기기 03");
+        deviceName.add("기기 04");
+        deviceName.add("기기 05");
+        alert.setAdapter(deviceName,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(getApplicationContext(), deviceName.getItem(id) + "와(과) 연결되었습니다", Toast.LENGTH_SHORT).show();
+                    }
+                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                       Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                       finish();
+                    }
+                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+        alert.show();
     }
 
     //수비 플레이어 대기 다이얼로그
@@ -221,10 +224,12 @@ public class Game extends AppCompatActivity {
                 new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
+                        Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });
         if(false){
+            //상대방과 연결되었을 때
             dialog.dismiss();
         }
     }
@@ -246,11 +251,12 @@ public class Game extends AppCompatActivity {
         }).setOnCancelListener(new DialogInterface.OnCancelListener(){
             @Override
             public void onCancel(DialogInterface dialog) {
+                Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }).show();
     }
-
+//-------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
