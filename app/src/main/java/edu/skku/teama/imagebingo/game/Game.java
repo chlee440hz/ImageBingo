@@ -334,7 +334,6 @@ private void SetPlayerNum(){
                         // 클라이언트 소켓 스레드 생성 & 시작
                         mCThread = new ClientThread(device);
                         mCThread.start();
-                        Toast.makeText(getApplicationContext(), deviceName.getItem(id) + "와(과) 연결되었습니다", Toast.LENGTH_SHORT).show();
                     }
                 }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
@@ -367,10 +366,6 @@ private void SetPlayerNum(){
                         finish();
                     }
                 });
-        //if(mSocketThread != null){
-        //상대방과 연결되었을 때
-        //  dialog.dismiss();
-        //}
     }
 //--------------------------------------------------------------------------------------------------
 
@@ -618,6 +613,8 @@ private void SetPlayerNum(){
     // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
     public void onConnected(BluetoothSocket socket) {
         showMessage("Socket connected");
+
+        //프로그레스 다이얼로그 종료
         if(dialog != null) dialog.dismiss();
 
         // 데이터 송수신 스레드가 생성되어 있다면 삭제한다

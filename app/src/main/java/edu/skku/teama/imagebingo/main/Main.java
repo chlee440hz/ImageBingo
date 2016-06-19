@@ -9,11 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.skku.teama.imagebingo.R;
-import edu.skku.teama.imagebingo.connectBT.ConnectBT;
 import edu.skku.teama.imagebingo.game.Game;
 import edu.skku.teama.imagebingo.help.Help;
-import edu.skku.teama.imagebingo.info.Info;
-import edu.skku.teama.imagebingo.rules.Rules;
 
 public class Main extends AppCompatActivity {
 
@@ -33,16 +30,8 @@ public class Main extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //게임 규칙
-        btnRules = (Button)findViewById(R.id.btnRules);
-        btnRules.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), Rules.class);
-                startActivity(intent);
-            }
-        });
 
-        //게임 방법
+        //도움말
         btnHelp = (Button)findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -51,16 +40,7 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        //게임정보
-        btnInfo = (Button)findViewById(R.id.btnInfo);
-        btnInfo.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), Info.class);
-                startActivity(intent);
-            }
-        });
-
-        //게임 종료
+        //나가기
         btnExit = (Button)findViewById(R.id.btnExit);
         btnExit.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

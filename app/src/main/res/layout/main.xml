@@ -5,54 +5,58 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".main.Main">
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#F5908D"
-        android:text="게임 시작"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:id="@+id/btnStartGame"/>
-    <Button
+        android:layout_weight="6"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#F1AFAE"
-        android:text="게임 규칙"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:id="@+id/btnRules"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#EBEAEB"
-        android:text="게임 방법"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:id="@+id/btnHelp"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#B3E1E9"
-        android:text="게임 정보"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:id="@+id/btnInfo"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#87D3DC"
-        android:text="게임 종료"
-        android:textSize="30dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:id="@+id/btnExit"/>
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#F5908D"
+            android:text="게임 시작"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:id="@+id/btnStartGame"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#87D3DC"
+            android:text="도움말"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:id="@+id/btnHelp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#C4C4CF"
+            android:text="나가기"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:id="@+id/btnExit"/>
+    </LinearLayout>
+
 </LinearLayout>
