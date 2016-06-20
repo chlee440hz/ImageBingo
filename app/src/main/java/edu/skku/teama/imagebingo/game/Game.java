@@ -175,19 +175,21 @@ public class Game extends AppCompatActivity {
     //백버튼 종료
     @Override
     public void onBackPressed() {
-        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
-        alert.setMessage("게임을 정말 종료하시겠습니까?.").setCancelable(false).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-            @Override
-            public  void onClick(DialogInterface dialog, int id) {
-                return;
-            }
-        }).setPositiveButton("예", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                mSocketThread.write("exit");
-                finish();
-            }
-        }).show();
+        if(!end) {
+            android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
+            alert.setMessage("게임을 정말 종료하시겠습니까?.").setCancelable(false).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    return;
+                }
+            }).setPositiveButton("예", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    mSocketThread.write("exit");
+                    finish();
+                }
+            }).show();
+        }
     }
 
     public void CheckBingo(int i) {
@@ -266,6 +268,7 @@ public class Game extends AppCompatActivity {
                         state.setText("상대 턴");
                         stateDetailed.setText("잠시만 기다려주세요");
                     } else {
+                        end = true;
                         keep = 1;
                         state.setText("승리");
                         stateDetailed.setText("축하합니다 !");
@@ -278,7 +281,6 @@ public class Game extends AppCompatActivity {
                         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
                     }
                 } else {
-                    end = true;
                     finish();
                 }
             }
@@ -600,6 +602,7 @@ public class Game extends AppCompatActivity {
                 String strArr[] = strMsg.split("-");
                 int index = Integer.parseInt(strArr[0]);
                 if(Integer.parseInt(strArr[1]) >= 3) {
+                    end = true;
                     check.setBackgroundColor(Color.parseColor("#96CDCD"));
                     getWindow().getDecorView().setBackgroundColor(Color.parseColor("#d15354"));
                     Toast.makeText(getApplicationContext(), "패배하였습니다", Toast.LENGTH_LONG).show();
@@ -621,6 +624,7 @@ public class Game extends AppCompatActivity {
                 CheckBingo(ch);
                 enableButtons.remove(ch);
                 if(numOfBingo >= 3) {
+                    end = true;
                     keep = 1;
                     check.setEnabled(true);
                     check.setBackgroundColor(Color.parseColor("#96CDCD"));
