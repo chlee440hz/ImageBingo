@@ -38,8 +38,10 @@ import edu.skku.teama.imagebingo.R;
 
 public class Game extends AppCompatActivity {
     private int imageID;
+    public static int TIME_OUT = 10*1000;
     private int keep;
     private boolean attack;
+    private boolean keepgoing;
     private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     private HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>();
     private TextView state;
@@ -113,6 +115,7 @@ public class Game extends AppCompatActivity {
         setContentView(R.layout.game);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#c4c4cf"));
         keep = 0;
+        keepgoing = true;
         mArDevice = new ArrayList<String>();
         // 블루투스 사용 가능상태 판단
         boolean isBlue = canUseBluetooth();
@@ -224,20 +227,22 @@ public class Game extends AppCompatActivity {
                     CheckBingo(i);
                     Integer ch = new Integer(i);
                     enableButtons.remove(ch);
-                    for (int j = 0; j < enableButtons.size(); j++) {
+                    for(int j = 0; j < enableButtons.size(); j++) {
                         bingo.get(enableButtons.get(j)).setEnabled(false);
                     }
                     bingo.get(i).setImageResource(R.drawable.selected);
                     bingo.get(i).setEnabled(false);
-                    if( mSocketThread == null ) return;
+                    if(mSocketThread == null) {
+                        return;
+                    }
                     // 사용자가 입력한 텍스트를 소켓으로 전송한다
                     String strBuf = map.get(BINGO_IDS[i]).toString();
                     strBuf += "-"+numOfBingo;
-                    if( strBuf.length() < 1 ) {
+                    if(strBuf.length() < 1) {
                         return;
                     }
                     mSocketThread.write(strBuf);
-                    if (numOfBingo < 3) {
+                    if(numOfBingo < 3) {
                         state.setText("상대 턴");
                         stateDetailed.setText("잠시만 기다려주세요");
                     } else {
@@ -245,7 +250,7 @@ public class Game extends AppCompatActivity {
                         state.setText("승리");
                         stateDetailed.setText("축하합니다 !");
                         check.setEnabled(true);
-                        for (int j = 0; j < 16; j++) {
+                        for(int j = 0; j < 16; j++) {
                             bingo.get(j).setEnabled(false);
                         }
                         check.setBackgroundColor(Color.parseColor("#96CDCD"));
@@ -314,6 +319,10 @@ public class Game extends AppCompatActivity {
                                         finish();
                                     }
                                 });
+                        dHandler.sendEmptyMessageDelayed(TIME_OUT, 10*1000);
+                        // 서버 소켓 접속을 위한 스레드 생성 & 시작
+                        mSThread = new ServerThread();
+                        mSThread.start();
                         // 사용자가 선택한 항목의 내용을 구한다
                         String strItem = mArDevice.get(id);
                         attack = true;
@@ -357,6 +366,9 @@ public class Game extends AppCompatActivity {
     }
     //수비 플레이어 대기 다이얼로그
     private void WaitConnect() {
+        // 서버 소켓 접속을 위한 스레드 생성 & 시작
+        mSThread = new ServerThread();
+        mSThread.start();
         attack = false;
         for(int i = 0; i < 16; i++) {
             bingo.get(i).setEnabled(attack);
@@ -376,6 +388,7 @@ public class Game extends AppCompatActivity {
                         finish();
                     }
                 });
+        dHandler.sendEmptyMessageDelayed(TIME_OUT, 10*1000);
     }
 //--------------------------------------------------------------------------------------------------
     // 블루투스 사용 가능상태 판단
@@ -394,17 +407,6 @@ public class Game extends AppCompatActivity {
         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(intent, ACTION_ENABLE_BT);
         return false;
-    }
-    // 블루투스 활성화 요청 결과 수신
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == ACTION_ENABLE_BT) {
-            // 사용자가 블루투스 활성화 승인했을때
-            if(resultCode == RESULT_OK) {
-                // 페어링된 원격 디바이스 목록 구하기
-                getParedDevice();
-            }
-            // 사용자가 블루투스 활성화 취소했을때
-        }
     }
     // 원격 디바이스 검색 시작
     public void startFindDevice() {
@@ -460,9 +462,6 @@ public class Game extends AppCompatActivity {
         if(mSThread != null) {
             return;
         }
-        // 서버 소켓 접속을 위한 스레드 생성 & 시작
-        mSThread = new ServerThread();
-        mSThread.start();
         // 블루투스 어댑터에서 페어링된 원격 디바이스 목록을 구한다
         Set<BluetoothDevice> devices = mBA.getBondedDevices();
         // 디바이스 목록에서 하나씩 추출
@@ -483,7 +482,7 @@ public class Game extends AppCompatActivity {
             try {
                 mmCSocket = device.createInsecureRfcommSocketToServiceRecord(BLUE_UUID);
             } catch(IOException e) {
-                //showMessage("Create Client Socket error");
+                showMessage("Create Client Socket error");
                 return;
             }
         }
@@ -492,12 +491,12 @@ public class Game extends AppCompatActivity {
             try {
                 mmCSocket.connect();
             } catch(IOException e) {
-                //showMessage("Connect to server error");
+                showMessage("Connect to server error");
                 // 접속이 실패했으면 소켓을 닫는다
                 try {
                     mmCSocket.close();
                 } catch (IOException e2) {
-                    //showMessage("Client Socket close error");
+                    showMessage("Client Socket close error");
                 }
                 return;
             }
@@ -509,11 +508,10 @@ public class Game extends AppCompatActivity {
             try {
                 mmCSocket.close();
             } catch (IOException e) {
-                //showMessage("Client Socket close error");
+                showMessage("Client Socket close error");
             }
         }
     }
-
     // 서버 소켓을 생성해서 접속이 들어오면 클라이언트 소켓을 생성하는 스레드
     private class ServerThread extends Thread {
         private BluetoothServerSocket mmSSocket;
@@ -522,7 +520,7 @@ public class Game extends AppCompatActivity {
             try {
                 mmSSocket = mBA.listenUsingInsecureRfcommWithServiceRecord(BLUE_NAME, BLUE_UUID);
             } catch(IOException e) {
-                //showMessage("Get Server Socket Error");
+                showMessage("Get Server Socket Error");
             }
         }
         public void run() {
@@ -531,7 +529,7 @@ public class Game extends AppCompatActivity {
             try {
                 cSocket = mmSSocket.accept();
             } catch(IOException e) {
-                //showMessage("Socket Accept Error");
+                showMessage("Socket Accept Error");
                 return;
             }
             // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
@@ -542,10 +540,27 @@ public class Game extends AppCompatActivity {
             try {
                 mmSSocket.close();
             } catch (IOException e) {
-                //showMessage("Server Socket close error");
+                showMessage("Server Socket close error");
             }
         }
     }
+    // 메시지를 화면에 표시
+    public void showMessage(String strMsg) {
+        // 메시지 텍스트를 핸들러에 전달
+        Message msg = Message.obtain(mHandler, 0, strMsg);
+        mHandler.sendMessage(msg);
+        Log.d("tag1", strMsg);
+    }
+
+    // 메시지 화면 출력을 위한 핸들러
+    Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                String strMsg = (String)msg.obj;
+                Toast.makeText(getApplicationContext(), strMsg, Toast.LENGTH_LONG).show();
+            }
+        }
+    };
     public void receivedImage(String strMsg) {
         // 메시지 텍스트를 핸들러에 전달
         Message msg = Message.obtain(iHandler, 0, strMsg);
@@ -597,18 +612,30 @@ public class Game extends AppCompatActivity {
             }
         }
     };
+    Handler dHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if(msg.what == TIME_OUT && keepgoing) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "연결에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    };
     // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
     public void onConnected(BluetoothSocket socket) {
-        //프로그레스 다이얼로그 종료
-        if(progressDialog != null) {
-            progressDialog.dismiss();
-        }
         // 데이터 송수신 스레드가 생성되어 있다면 삭제한다
-        if(mSocketThread != null)
+        if(mSocketThread != null) {
             mSocketThread = null;
+        }
         // 데이터 송수신 스레드를 시작
         mSocketThread = new SocketThread(socket);
         mSocketThread.start();
+        //프로그레스 다이얼로그 종료
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            keepgoing = false;
+            showMessage("연결됨");
+        }
     }
     // 데이터 송수신 스레드
     private class SocketThread extends Thread {
@@ -623,7 +650,7 @@ public class Game extends AppCompatActivity {
                 mmInStream = socket.getInputStream();
                 mmOutStream = socket.getOutputStream();
             } catch (IOException e) {
-//                showMessage("Get Stream error");
+                showMessage("송/수신 실패");
             }
         }
         // 소켓에서 수신된 데이터를 화면에 표시한다
@@ -639,7 +666,8 @@ public class Game extends AppCompatActivity {
                     receivedImage(strBuf);
                     SystemClock.sleep(1);
                 } catch (IOException e) {
-//                    showMessage("Socket disconneted");
+                    showMessage("연결 끊김");
+                    finish();
                     break;
                 }
             }
@@ -651,7 +679,7 @@ public class Game extends AppCompatActivity {
                 byte[] buffer = strBuf.getBytes();
                 mmOutStream.write(buffer);
             } catch (IOException e) {
-//                showMessage("Socket write error");
+                showMessage("전송 실패");
             }
         }
     }
