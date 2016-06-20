@@ -641,7 +641,7 @@ public class Game extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if(msg.what == TIME_OUT && keepgoing) {
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "연결에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "연결에 실패하였습니다", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -659,7 +659,7 @@ public class Game extends AppCompatActivity {
         if(progressDialog != null) {
             progressDialog.dismiss();
             keepgoing = false;
-            showMessage("연결됨");
+            showMessage("연결에 성공하였습니다");
         }
     }
     // 데이터 송수신 스레드
@@ -675,7 +675,7 @@ public class Game extends AppCompatActivity {
                 mmInStream = socket.getInputStream();
                 mmOutStream = socket.getOutputStream();
             } catch (IOException e) {
-                showMessage("송/수신 실패");
+                showMessage("송신(수신)에 실패하였습니다");
             }
         }
         // 소켓에서 수신된 데이터를 화면에 표시한다
@@ -692,7 +692,7 @@ public class Game extends AppCompatActivity {
                     SystemClock.sleep(1);
                 } catch (IOException e) {
                     if(!end) {
-                        showMessage("연결 끊김");
+                        showMessage("연결이 끊겼습니다");
                         finish();
                         break;
                     }
@@ -706,7 +706,7 @@ public class Game extends AppCompatActivity {
                 byte[] buffer = strBuf.getBytes();
                 mmOutStream.write(buffer);
             } catch (IOException e) {
-                showMessage("전송 실패");
+                showMessage("전송에 실패하였습니다");
             }
         }
     }
