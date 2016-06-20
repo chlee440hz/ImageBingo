@@ -482,7 +482,7 @@ public class Game extends AppCompatActivity {
             try {
                 mmCSocket = device.createInsecureRfcommSocketToServiceRecord(BLUE_UUID);
             } catch(IOException e) {
-                showMessage("Create Client Socket error");
+                //showMessage("Create Client Socket error");
                 return;
             }
         }
@@ -491,12 +491,12 @@ public class Game extends AppCompatActivity {
             try {
                 mmCSocket.connect();
             } catch(IOException e) {
-                showMessage("Connect to server error");
+                //showMessage("Connect to server error");
                 // 접속이 실패했으면 소켓을 닫는다
                 try {
                     mmCSocket.close();
                 } catch (IOException e2) {
-                    showMessage("Client Socket close error");
+                    //showMessage("Client Socket close error");
                 }
                 return;
             }
@@ -508,7 +508,7 @@ public class Game extends AppCompatActivity {
             try {
                 mmCSocket.close();
             } catch (IOException e) {
-                showMessage("Client Socket close error");
+                //showMessage("Client Socket close error");
             }
         }
     }
@@ -520,7 +520,7 @@ public class Game extends AppCompatActivity {
             try {
                 mmSSocket = mBA.listenUsingInsecureRfcommWithServiceRecord(BLUE_NAME, BLUE_UUID);
             } catch(IOException e) {
-                showMessage("Get Server Socket Error");
+                //showMessage("Get Server Socket Error");
             }
         }
         public void run() {
@@ -529,7 +529,7 @@ public class Game extends AppCompatActivity {
             try {
                 cSocket = mmSSocket.accept();
             } catch(IOException e) {
-                showMessage("Socket Accept Error");
+                //showMessage("Socket Accept Error");
                 return;
             }
             // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
@@ -540,7 +540,7 @@ public class Game extends AppCompatActivity {
             try {
                 mmSSocket.close();
             } catch (IOException e) {
-                showMessage("Server Socket close error");
+                //showMessage("Server Socket close error");
             }
         }
     }
