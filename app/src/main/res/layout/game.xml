@@ -25,7 +25,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textSize="32dp"/>
+                    android:textSize="30dp"
+                    android:textColor="#FFFFFF"
+                    android:text="이미지 빙고"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,7 +38,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textSize="18dp"/>
+                    android:textSize="15dp"
+                    android:textColor="#FFFFFF"
+                    android:text="상대를 찾는중입니다"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -57,7 +61,8 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="확인"
-                android:textSize="32dp"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"/>
         </LinearLayout>
     </LinearLayout>

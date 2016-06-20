@@ -105,7 +105,7 @@ public class Game extends AppCompatActivity {
     ClientThread mCThread = null; // 클라이언트 소켓 접속 스레드
     ServerThread mSThread = null; // 서버 소켓 접속 스레드
     SocketThread mSocketThread = null; // 데이터 송수신 스레드
-    ProgressDialog dialog;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,12 +238,12 @@ public class Game extends AppCompatActivity {
                     }
                     mSocketThread.write(strBuf);
                     if (numOfBingo < 3) {
-                        state.setText("상대턴");
+                        state.setText("상대 턴");
                         stateDetailed.setText("잠시만 기다려주세요");
                     } else {
                         keep = 1;
-                        state.setText("승리!!!!");
-                        stateDetailed.setText("축하합니다.");
+                        state.setText("승리");
+                        stateDetailed.setText("축하합니다 !");
                         check.setEnabled(true);
                         for (int j = 0; j < 16; j++) {
                             bingo.get(j).setEnabled(false);
@@ -275,7 +275,7 @@ public class Game extends AppCompatActivity {
     //플레이어 순서 선택 다이얼로그
     private void SetPlayerNum() {
         android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
-        alert.setMessage("선공/후공을 결정해 주세요.").setNegativeButton("성공", new DialogInterface.OnClickListener() {
+        alert.setMessage("선공/후공을 결정해 주세요.").setNegativeButton("선공", new DialogInterface.OnClickListener() {
             @Override
             public  void onClick(DialogInterface dialog, int id) {
                 SetConnect();
@@ -301,14 +301,27 @@ public class Game extends AppCompatActivity {
         alert.setAdapter(deviceName,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        progressDialog = ProgressDialog.show(
+                                Game.this,
+                                "연결중",
+                                "잠시만 기다려 주세요",
+                                true,
+                                true,
+                                new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialog) {
+                                        Toast.makeText(getApplicationContext(), "게임이 취소되었습니다", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                });
                         // 사용자가 선택한 항목의 내용을 구한다
                         String strItem = mArDevice.get(id);
                         attack = true;
                         for(int i = 0; i < 16; i++) {
                             bingo.get(i).setEnabled(attack);
                         }
-                        state.setText("당신턴");
-                        stateDetailed.setText("그림을 선택해주세요.");
+                        state.setText("내 턴");
+                        stateDetailed.setText("그림을 선택해주세요");
                         // 사용자가 선택한 디바이스의 주소를 구한다
                         int pos = strItem.indexOf(" - ");
                         if( pos <= 0 ) return;
@@ -348,9 +361,9 @@ public class Game extends AppCompatActivity {
         for(int i = 0; i < 16; i++) {
             bingo.get(i).setEnabled(attack);
         }
-        state.setText("상대턴");
-        stateDetailed.setText("잠시만 기다려주세요.");
-        dialog = ProgressDialog.show(
+        state.setText("상대 턴");
+        stateDetailed.setText("잠시만 기다려주세요");
+        progressDialog = ProgressDialog.show(
                 this,
                 "연결중",
                 "잠시만 기다려 주세요",
@@ -424,9 +437,9 @@ public class Game extends AppCompatActivity {
             }
         }
     };
-    // 디바이스를 ListView 에 추가
+    // 디바이스를 ArrayList 에 추가
     public void addDeviceToList(String name, String address) {
-        // ListView 와 연결된 ArrayList 에 새로운 항목을 추가
+        // ArrayList 에 새로운 항목을 추가
         String deviceInfo = name + " - " + address;
         Log.d("tag1", "Device Find: " + deviceInfo);
         mArDevice.add(deviceInfo);
@@ -500,6 +513,7 @@ public class Game extends AppCompatActivity {
             }
         }
     }
+
     // 서버 소켓을 생성해서 접속이 들어오면 클라이언트 소켓을 생성하는 스레드
     private class ServerThread extends Thread {
         private BluetoothServerSocket mmSSocket;
@@ -549,8 +563,8 @@ public class Game extends AppCompatActivity {
                     check.setBackgroundColor(Color.parseColor("#96CDCD"));
                     getWindow().getDecorView().setBackgroundColor(Color.parseColor("#d15354"));
                     Toast.makeText(getApplicationContext(), "Defeated!", Toast.LENGTH_LONG).show();
-                    state.setText("패배!!!!");
-                    stateDetailed.setText("다음 기회에...");
+                    state.setText("패배");
+                    stateDetailed.setText("다음 기회에 ...");
                     keep = 1;
                     check.setEnabled(true);
                     for (int j = 0; j < 16; j++) {
@@ -558,7 +572,7 @@ public class Game extends AppCompatActivity {
                     }
                     return;
                 }
-                state.setText("당신턴");
+                state.setText("내 턴");
                 stateDetailed.setText("그림을 선택해주세요");
                 selectedImage.setImageResource(IMAGE_IDS[index]);
                 Integer ch = new Integer(map1.get(index));
@@ -572,8 +586,8 @@ public class Game extends AppCompatActivity {
                     check.setBackgroundColor(Color.parseColor("#96CDCD"));
                     Toast.makeText(getApplicationContext(), "Victory!", Toast.LENGTH_LONG).show();
                     getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
-                    state.setText("승리!!!!");
-                    stateDetailed.setText("축하합니다.");
+                    state.setText("승리");
+                    stateDetailed.setText("축하합니다 !");
                     strMsg = strArr[0] + "-" + numOfBingo;
                     mSocketThread.write(strMsg);
                 }
@@ -586,8 +600,8 @@ public class Game extends AppCompatActivity {
     // 원격 디바이스와 접속되었으면 데이터 송수신 스레드를 시작
     public void onConnected(BluetoothSocket socket) {
         //프로그레스 다이얼로그 종료
-        if(dialog != null) {
-            dialog.dismiss();
+        if(progressDialog != null) {
+            progressDialog.dismiss();
         }
         // 데이터 송수신 스레드가 생성되어 있다면 삭제한다
         if(mSocketThread != null)
