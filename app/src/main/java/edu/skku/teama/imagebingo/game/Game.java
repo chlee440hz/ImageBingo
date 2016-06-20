@@ -189,6 +189,8 @@ public class Game extends AppCompatActivity {
                     finish();
                 }
             }).show();
+        }else {
+            Toast.makeText(getApplicationContext(), "확인 버튼을 클릭하세요", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -696,7 +698,7 @@ public class Game extends AppCompatActivity {
                     SystemClock.sleep(1);
                 } catch (IOException e) {
                     if(!end) {
-                        showMessage("연결이 끊겼습니다");
+                        showMessage("연결이 끊어졌습니다");
                         finish();
                         break;
                     }
