@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ public class Help extends AppCompatActivity {
     private int indicator = 0;
     private ArrayList<String> help;
     private ArrayList<String> helpDetailed;
+    private ArrayList<Integer> helpImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +47,29 @@ public class Help extends AppCompatActivity {
         helpDetailed.add("1~4를 반복, 먼저 빙고 3개를 완성하는\n플레이어가 승리하게 됩니다");
         helpDetailed.add("지금 바로 이미지 빙고를 즐겨보세요 !");
 
+        helpImage = new ArrayList<Integer>();
+        helpImage.add(R.drawable.help_00);
+        helpImage.add(R.drawable.help_01);
+        helpImage.add(R.drawable.help_02);
+        helpImage.add(R.drawable.help_03);
+        helpImage.add(R.drawable.help_04);
+        helpImage.add(R.drawable.help_05);
+        helpImage.add(R.drawable.help_06);
+        helpImage.add(R.drawable.help_07);
+        helpImage.add(R.drawable.help_08);
+        helpImage.add(R.drawable.help_09);
+        helpImage.add(R.drawable.help_10);
+        helpImage.add(R.drawable.help_11);
+
+        final ImageView imageHelp = (ImageView) findViewById(R.id.imageHelp);
         final TextView textHelp = (TextView) findViewById(R.id.textHelp);
         final TextView textHelpDetailed = (TextView) findViewById(R.id.textHelpDetailed);
         final Button btnPrev = (Button) findViewById(R.id.btnPrev);
         final Button btnNext = (Button) findViewById(R.id.btnNext);
 
-        textHelp.setText(help.get(0));
-        textHelpDetailed.setText(helpDetailed.get(0));
+        textHelp.setText(help.get(indicator));
+        textHelpDetailed.setText(helpDetailed.get(indicator));
+        imageHelp.setImageResource(helpImage.get(indicator));
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,11 +78,13 @@ public class Help extends AppCompatActivity {
                     indicator--;
                     textHelp.setText(help.get(indicator));
                     textHelpDetailed.setText(helpDetailed.get(indicator));
+                    imageHelp.setImageResource(helpImage.get(indicator));
                     btnNext.setText("다음");
                 } else if(indicator > 0 && indicator <11) {
                     indicator--;
                     textHelp.setText(help.get(indicator));
                     textHelpDetailed.setText(helpDetailed.get(indicator));
+                    imageHelp.setImageResource(helpImage.get(indicator));
                 } else if(indicator == 0) {
                     Toast.makeText(getApplicationContext(), "처음입니다", Toast.LENGTH_SHORT).show();
                 }
@@ -77,10 +97,12 @@ public class Help extends AppCompatActivity {
                     indicator++;
                     textHelp.setText(help.get(indicator));
                     textHelpDetailed.setText(helpDetailed.get(indicator));
+                    imageHelp.setImageResource(helpImage.get(indicator));
                 } else if(indicator == 10) {
                     indicator++;
                     textHelp.setText(help.get(indicator));
                     textHelpDetailed.setText(helpDetailed.get(indicator));
+                    imageHelp.setImageResource(helpImage.get(indicator));
                     btnNext.setText("종료");
                 } else if(indicator > 10) {
                     finish();
