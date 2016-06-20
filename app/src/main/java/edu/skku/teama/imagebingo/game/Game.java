@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -168,6 +169,23 @@ public class Game extends AppCompatActivity {
             enableButtons.add(i);
             ButtonMethod(i);
         }
+    }
+    //백버튼 종료
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
+        alert.setMessage("게임을 정말 종료하시겠습니까?.").setCancelable(false).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public  void onClick(DialogInterface dialog, int id) {
+                return;
+            }
+        }).setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        }).show();
     }
 
     public void CheckBingo(int i) {
@@ -390,7 +408,7 @@ public class Game extends AppCompatActivity {
                 });
         dHandler.sendEmptyMessageDelayed(TIME_OUT, 10*1000);
     }
-//--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
     // 블루투스 사용 가능상태 판단
     public boolean canUseBluetooth() {
         // 블루투스 어댑터를 구한다
