@@ -591,8 +591,8 @@ public class Game extends AppCompatActivity {
             if (msg.what == 0) {
                 String strMsg = (String)msg.obj;
                 if(strMsg.equals("exit")) {
-                    Toast.makeText(getApplicationContext(), "연결이 끊겼습니다.", Toast.LENGTH_SHORT).show();
                     finish();
+                    return;
                 }
                 String strArr[] = strMsg.split("-");
                 int index = Integer.parseInt(strArr[0]);
