@@ -173,7 +173,6 @@ public class Game extends AppCompatActivity {
     //백버튼 종료
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
         alert.setMessage("게임을 정말 종료하시겠습니까?.").setCancelable(false).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
             @Override
@@ -183,6 +182,7 @@ public class Game extends AppCompatActivity {
         }).setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                mSocketThread.write("exit");
                 finish();
             }
         }).show();
@@ -590,6 +590,10 @@ public class Game extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 String strMsg = (String)msg.obj;
+                if(strMsg.equals("exit")) {
+                    Toast.makeText(getApplicationContext(), "연결이 끊겼습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
                 String strArr[] = strMsg.split("-");
                 int index = Integer.parseInt(strArr[0]);
                 if(Integer.parseInt(strArr[1]) >= 3) {
