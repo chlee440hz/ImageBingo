@@ -274,7 +274,7 @@ public class Game extends AppCompatActivity {
                             bingo.get(j).setEnabled(false);
                         }
                         check.setBackgroundColor(Color.parseColor("#96CDCD"));
-                        Toast.makeText(getApplicationContext(), "Victory!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "승리하였습니다", Toast.LENGTH_LONG).show();
                         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
                     }
                 } else {
@@ -602,7 +602,7 @@ public class Game extends AppCompatActivity {
                 if(Integer.parseInt(strArr[1]) >= 3) {
                     check.setBackgroundColor(Color.parseColor("#96CDCD"));
                     getWindow().getDecorView().setBackgroundColor(Color.parseColor("#d15354"));
-                    Toast.makeText(getApplicationContext(), "Defeated!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "패배하였습니다", Toast.LENGTH_LONG).show();
                     state.setText("패배");
                     stateDetailed.setText("다음 기회에 ...");
                     keep = 1;
@@ -624,7 +624,7 @@ public class Game extends AppCompatActivity {
                     keep = 1;
                     check.setEnabled(true);
                     check.setBackgroundColor(Color.parseColor("#96CDCD"));
-                    Toast.makeText(getApplicationContext(), "Victory!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "승리하였습니다", Toast.LENGTH_LONG).show();
                     getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
                     state.setText("승리");
                     stateDetailed.setText("축하합니다 !");
