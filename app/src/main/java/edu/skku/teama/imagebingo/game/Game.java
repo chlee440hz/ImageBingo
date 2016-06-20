@@ -43,6 +43,7 @@ public class Game extends AppCompatActivity {
     private int keep;
     private boolean attack;
     private boolean keepgoing;
+    private boolean end;
     private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
     private HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>();
     private TextView state;
@@ -117,6 +118,7 @@ public class Game extends AppCompatActivity {
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#c4c4cf"));
         keep = 0;
         keepgoing = true;
+        end = false;
         mArDevice = new ArrayList<String>();
         // 블루투스 사용 가능상태 판단
         boolean isBlue = canUseBluetooth();
@@ -276,6 +278,7 @@ public class Game extends AppCompatActivity {
                         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#60c891"));
                     }
                 } else {
+                    end = true;
                     finish();
                 }
             }
@@ -688,9 +691,11 @@ public class Game extends AppCompatActivity {
                     receivedImage(strBuf);
                     SystemClock.sleep(1);
                 } catch (IOException e) {
-                    showMessage("연결 끊김");
-                    finish();
-                    break;
+                    if(!end) {
+                        showMessage("연결 끊김");
+                        finish();
+                        break;
+                    }
                 }
             }
         }
